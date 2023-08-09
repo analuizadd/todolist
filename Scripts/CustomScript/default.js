@@ -48,7 +48,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    if (response.d != undefined) {
+                    if (response.d != true) {
                         alert(response.d)
                     } else {
                         console.log('Tarefa adicionada com sucesso.');
@@ -137,7 +137,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    if (response.d != undefined) {
+                    if (response.d != true) {
                         alert(response.d)
                     } else {
                         console.log('Tarefa editada com sucesso.');
