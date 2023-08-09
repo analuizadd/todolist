@@ -94,7 +94,7 @@ namespace ToDoList
             {
                 using (var dbContext = new TodoContext())
                 {
-                    var taskExist = dbContext.Tasks.FirstOrDefault(t => t.Title == title);
+                    var taskExist = dbContext.Tasks.FirstOrDefault(t => t.Title == title && t.ID != taskId);
                     if (taskExist == null)
                     {
                         var taskToEdit = dbContext.Tasks.FirstOrDefault(t => t.ID == taskId);
