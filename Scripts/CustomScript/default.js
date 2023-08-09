@@ -193,9 +193,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                setTimeout(function () {
-                    location.reload();
-                }, 500);
+                location.reload();
             },
             error: function () {
                 alert('Erro ao editar a tarefa.');
