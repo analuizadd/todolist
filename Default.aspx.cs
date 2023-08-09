@@ -4,6 +4,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using ToDoList.Models;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ToDoList
 {
@@ -13,7 +14,7 @@ namespace ToDoList
         {
 
         }
-        public IQueryable<Task> tasksGrid_GetData()
+        public IQueryable<Models.Task> tasksGrid_GetData()
         {
             try
             {
@@ -29,24 +30,29 @@ namespace ToDoList
         }
 
         [System.Web.Services.WebMethod]
-        public static bool AddTask(string title, string description)
+        public static dynamic AddTask(string title, string description)
         {
             try
             {
                 using (var dbContext = new TodoContext())
                 {
-                    Task newTask = new Task
+                    var taskExist = dbContext.Tasks.FirstOrDefault(t => t.Title == title);
+                    if(taskExist == null)
                     {
-                        Title = title,
-                        Description = description,
-                        list_id = 1,
-                        user_id = 1,
-                    };
+                        Models.Task newTask = new Models.Task
+                        {
+                            Title = title,
+                            Description = description,
+                            list_id = 1,
+                            user_id = 1,
+                        };
 
-                    dbContext.Tasks.Add(newTask);
-                    dbContext.SaveChanges();
+                        dbContext.Tasks.Add(newTask);
+                        dbContext.SaveChanges();
 
-                    return true;
+                        return true;
+                    }
+                    return "This task title already exists!";                    
                 }
             }
             catch (Exception ex)
@@ -82,22 +88,29 @@ namespace ToDoList
         }
 
         [System.Web.Services.WebMethod]
-        public static bool EditTask(int taskId, string title, string description)
+        public static dynamic EditTask(int taskId, string title, string description)
         {
             try
             {
                 using (var dbContext = new TodoContext())
                 {
-                    var taskToEdit = dbContext.Tasks.FirstOrDefault(t => t.ID == taskId);
-
-                    if (taskToEdit != null)
+                    var taskExist = dbContext.Tasks.FirstOrDefault(t => t.Title == title);
+                    if (taskExist == null)
                     {
-                        taskToEdit.Title = title;
-                        taskToEdit.Description = description;
-                        dbContext.SaveChanges();
-                        return true;
+                        var taskToEdit = dbContext.Tasks.FirstOrDefault(t => t.ID == taskId);
+
+                        if (taskToEdit != null)
+                        {
+                            taskToEdit.Title = title;
+                            taskToEdit.Description = description;
+                            dbContext.SaveChanges();
+
+                            return true;
+                        }
+                        return false;
+                    } else {
+                        return "This task title already exists!";
                     }
-                    return false;
                 }
             }
             catch (Exception ex)

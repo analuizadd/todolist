@@ -48,7 +48,11 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    console.log('Tarefa adicionada com sucesso:', response);
+                    if (response.d != undefined) {
+                        alert(response.d)
+                    } else {
+                        console.log('Tarefa adicionada com sucesso.');
+                    }
                     location.reload();
                 },
                 error: function () {
@@ -133,6 +137,11 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
+                    if (response.d != undefined) {
+                        alert(response.d)
+                    } else {
+                        console.log('Tarefa editada com sucesso.');
+                    }
                     location.reload();
                 },
                 error: function () {
