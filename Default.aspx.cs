@@ -18,7 +18,7 @@ namespace ToDoList
             try
             {
                 TodoContext db = new TodoContext();
-                var query = db.Tasks;
+                var query = db.Tasks.OrderBy(t => t.Done);
                 return query;
             }
             catch (Exception ex) 
